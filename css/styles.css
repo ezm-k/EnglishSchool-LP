@@ -1,0 +1,1020 @@
+@charset "UTF-8";
+
+
+/* CSSプロパティの記載順
+1.視覚整形モデル
+2.ボックスモデル
+3.背景
+4.色
+5.フォント
+6.表
+7.UI
+8.アニメーション
+9.その他 */
+
+/*-------------------------------------------
+Common
+-------------------------------------------*/
+
+html {
+  font-size: 100%;
+}
+
+body {
+  color: #333;
+  font-family:  "游ゴシック体", "YuGothic", "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", "メイリオ", sans-serif;
+  letter-spacing: 0.1em;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+li {
+  list-style: none;
+}
+/* 
+セクションタイトル用の共通クラス 
+*/
+.section_title {
+  position: relative;
+  margin-bottom: 100px;
+  font-size: 2.25rem;
+  text-align: center;
+}
+/* 
+セクションタイトルに下線を引く 
+*/
+.section_title::after {
+  display: block;
+  position: absolute;
+  /* 中央揃え left:0; right:0; margin: 0 auto; */
+  left: 0;
+  right: 0;
+  margin: auto; 
+  bottom: -20px;
+  width: 100px;
+  height: 3px;
+  background: #333;
+  content: "";
+}
+/* 
+コンテンツ幅設定の共通クラス 
+*/
+.wrapper {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/*-------------------------------------------
+ヘッダー
+-------------------------------------------*/
+#header {
+  height: 100px;
+  padding: 40px 0 0 50px;
+}
+
+#header .site_title {
+  width: 100px;
+  line-height: 0;
+}
+
+#header .site_title a {
+  display: block;
+}
+
+/* 
+ハンバーガーメニュー 
+*/
+/* 常に最前面に配置。 */
+#header .hamburger_menu {
+  z-index: 9999;  
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: #ff2a2a;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+#header .hamburger_menu:hover {
+  opacity: .7;
+}
+
+/* ハンバーガーメニューの線の設定 */
+#header .hamburger_menu span {
+  position: absolute;
+  left: 25px;
+  width: 50px;
+  height: 2px;
+  background: #fff;
+  transition: all .6s ease;
+}
+
+/* １本目 */
+#header .hamburger_menu span:nth-child(1) {
+  top: 36px;
+}
+
+/* ２本目 */
+#header .hamburger_menu span:nth-child(2) {
+  top: 50px;
+}
+
+/* ３本目 */
+#header .hamburger_menu span:nth-child(3) {
+  top: 64px;
+}
+
+/* 
+ハンバーガーメニューが開いてる時の設定
+activeクラスが付与されると線が回転し×になる
+ */
+ /* １本目は－４５度回転 */
+#header .hamburger_menu.active span:nth-child(1) {
+  top: 50px;
+  transform:  rotate(-45deg);
+}
+
+/* ２本目、３本目は４５度回転して重ねる */
+#header .hamburger_menu.active span:nth-child(2),
+#header .hamburger_menu.active span:nth-child(3) {
+  top: 50px;
+  transform:  rotate(45deg);
+}
+
+/* 
+ハンバーガーメニュー　ナビ 
+最初は透明にして「z-index: -1;」で選択できないようにする
+*/
+.hamburger_menu_navi {
+  z-index: -1;
+  opacity: 0; 
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ff2a2a;
+  color: #fff;
+  text-align: center;
+  transition: all .6s;
+}
+
+/* 
+ハンバーガーメニューが開いてる時の設定
+jQueryでactiveクラス付与し最前面に表示させる
+ */
+.hamburger_menu_navi.active {
+  z-index: 999;
+  opacity: 1;
+}
+
+.hamburger_menu_navi .site_title {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  width: 100px;
+}
+
+.hamburger_menu_navi .menu {
+  margin: 80px 0 55px;
+}
+
+.hamburger_menu_navi .menu li {
+  margin-bottom: 20px;
+}
+
+.hamburger_menu_navi .menu li a {
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ナビのテキストに下線を引くアニメーション */
+.hamburger_menu_navi .menu li a::after {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  transform: scaleX(0); /* X方向0 */
+  transform-origin: left;/*左上基点*/
+  width: 100%;
+  height: 1px;
+  background: #fff;
+  content: '';
+  transition: all .3s;
+}
+
+.hamburger_menu_navi .menu li a:hover:after {
+  transform: scaleX(1);
+}
+
+.hamburger_menu_navi .btn {
+  position: relative;
+  padding: 20px 45px;
+  border: 1px solid #fff;
+  color: #fff;
+  font-weight: bold;
+  transition: all .3s;
+}
+
+/* ボタンの右下側に線を引く */
+.hamburger_menu_navi .btn::before {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 250px;
+  height: 55px;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  content: '';
+  transition: all .3s;
+}
+
+/* 右下側の線を少し右下に動かすアニメーション */
+.hamburger_menu_navi .btn:hover {
+  background: #fff;
+  color: #ff2a2a;
+}
+
+.hamburger_menu_navi .btn:hover::before {
+  right: -10px;
+  bottom: -10px;
+}
+
+/*-------------------------------------------
+Mainvisual
+-------------------------------------------*/
+#mainvisual {
+  position: relative;
+  height: 720px;
+  margin-bottom: 120px;
+}
+
+/*
+メインビジュアルの３枚の画像を自動的に差し替える
+画像の初期状態は透明にしておく
+画像入れ替わりのアニメーション設定
+*/
+#mainvisual .img_wrap li {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75%;
+  animation: fade 15s infinite;
+}
+
+#mainvisual .img_wrap li:nth-child(1) {
+  animation-delay: 0s;
+}
+
+#mainvisual .img_wrap li:nth-child(2) {
+  animation-delay: 5s;
+}
+
+#mainvisual .img_wrap li:nth-child(3) {
+  animation-delay: 10s;
+}
+
+#mainvisual .img_wrap li img {
+  width: 100%;
+  height: 720px;
+  object-fit: cover;
+}
+
+/* 
+画像の枠をぼかす
+*/
+#mainvisual .img_wrap li::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 0 0 10px 20px #fff;
+  content: "";
+}
+
+/* 
+アニメーション処理
+*/
+@keyframes fade {
+  0%{ opacity: 0;}
+  15%{ opacity: 1;}
+  30%{ opacity: 1;}
+  45%{ opacity: 0;}
+  100%{ opacity: 0;}
+}
+
+#mainvisual .text {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+}
+
+#mainvisual .text .title {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2.875rem;
+  font-weight: bold;
+  filter: drop-shadow(0 4px 6px #fff);
+}
+
+#mainvisual .text .btn {
+  display: block;
+  position: relative;
+  top: 0;
+  padding: 15px 35px;
+  border-bottom: 8px solid #9a0413;
+  border-radius: 10px;
+  background: #ff2a2a;
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: all .3s;
+}
+
+/* 
+ボタンが押し込まれるアニメーション
+位置移動のために基準位置（top , position: relative）を設定 
+*/
+#mainvisual .text .btn:hover {
+  top: 7px;
+  border-bottom: 1px solid #9a0413;
+}
+
+/* 
+ボタン右隅の矢印
+*/
+#mainvisual .text .btn::after {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  bottom: 0;
+  content: "";
+  width: 15px;
+  height: 15px;
+  margin: auto 0; 
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transform: rotate(45deg);
+}
+
+
+/*-------------------------------------------
+Reason
+-------------------------------------------*/
+#reason {
+  margin-bottom: 120px;
+}
+
+#reason .bg {
+  padding: 80px 0;
+  background: #ff2a2a;
+}
+
+/* 
+スライドの左右共通設定 
+初期状態は透明にしておく
+*/
+#reason .bg .slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  width: 50%;
+  padding: 5%;
+  background: #fff;
+}
+
+#reason .bg .slide img {
+  margin-right: 30px;
+  height: 60px;
+}
+
+#reason .bg .slide p span {
+  display: block;
+}
+
+#reason .bg .slide .title {
+  color: #ff2a2a;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+#reason .bg .slide .text {
+  font-size: 1.125rem;
+}
+
+#reason .bg .inview_slide_left {
+  margin-bottom: 40px;
+  border-radius: 0 20px 20px 0;
+}
+
+/* 
+左側スライドのアニメーション設定
+*/
+#reason .left_appear {
+  animation: left_appear .5s ease-out 0s 1 forwards;
+}
+
+/* 
+左側スライドのアニメーション処理 
+*/
+@keyframes left_appear {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%)
+  }
+}
+
+#reason .bg .inview_slide_right {
+  border-radius: 20px 0 0 20px;
+}
+
+/* 
+右側スライドのアニメーション設定
+*/
+#reason .right_appear {
+  animation: right_appear .5s ease-out 0s 1 forwards;
+}
+
+/* 
+右側スライドのアニメーション処理 
+*/
+@keyframes right_appear {
+  0% {
+    transform: translateX(150%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(100%)
+  }
+}
+
+/*-------------------------------------------
+Voice
+-------------------------------------------*/
+#voice {
+  margin-bottom: 120px;
+}
+
+/* 
+アイコンとコメントの設定
+初期状態は透明にしておく 
+*/
+#voice .item {
+  display: flex;
+  align-items: flex-start;
+  opacity: 0;
+  margin-bottom: 60px;
+}
+
+/* 
+item_leftは右寄せ 
+*/
+#voice .item_left {
+  justify-content: flex-start;
+}
+
+#voice .item_left:last-child {
+  margin-bottom: 0;
+}
+
+/*
+item_rightは左寄せ
+*/
+#voice .item_right {
+  justify-content: flex-end;
+}
+
+#voice .item .student img {
+  width: 120px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+#voice .item .student p {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+#voice .item_left .student {
+  margin-right: 25px;
+}
+
+#voice .item_right .student {
+  margin-left: 25px;
+}
+/* 
+吹き出しの共通設定 
+*/
+#voice .item .balloon {
+  position: relative;
+  width: 60%;
+  padding: 20px;
+  border-radius: 15px;
+  background: #e9f1fb;
+}
+
+/* 
+右寄せ吹き出しの矢印 
+*/
+#voice .item_left .balloon::before {
+  content: "";
+  position: absolute;
+  top: 60%;
+  left: -30px;
+  border: 15px solid transparent;
+  border-right: 15px solid #e9f1fb;
+}
+
+/* 
+左寄せ吹き出しの矢印 
+*/
+#voice .item_right .balloon::after {
+  content: "";
+  position: absolute;
+  top: 60%;
+  right: -30px;
+  border: 15px solid transparent;
+  border-left: 15px solid #e9f1fb;
+}
+
+/* 
+画面に入ったら拡大しながら表示するアニメーション設定
+*/
+#voice .voice_appear {
+  animation: voice_appear .5s ease-out 0s 1 forwards;
+}
+
+/* 
+アニメーション処理 
+*/ 
+@keyframes voice_appear {
+  0% {
+    transform: scale(0.1);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+/*-------------------------------------------
+Summary
+-------------------------------------------*/
+
+/* 
+背景画像をループで移動させるアニメーション設定 
+*/
+#summary {
+  padding: 60px 0;
+  margin-bottom: 120px;
+  background-image: url(../img/bg.gif);
+  background-repeat: repeat; 
+  animation: scroll_bg 10s infinite linear;
+}
+
+/* 
+アニメーション処理 
+*/
+@keyframes scroll_bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -700px 700px ;
+  }
+}
+
+#summary .menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+}
+
+#summary .menu li {
+  width: calc(50% - 32px);
+  padding: 60px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+#summary .menu .menu_title {
+  margin-bottom: 30px;
+  line-height: 1;
+  text-align: center;
+}
+
+#summary .menu .menu_title .ja {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 1.75rem;
+}
+
+#summary .menu .menu_title .en {
+  display: block;
+  font-size: 1.125rem;
+}
+
+
+/*-------------------------------------------
+Entry
+-------------------------------------------*/
+#entry {
+  margin-bottom: 120px;
+  text-align: center;
+}
+
+#entry .title {
+  margin-bottom: 5px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#entry .catchphrase {
+  margin-bottom: 40px;
+  font-size: 1.125rem;
+}
+
+/*
+ボタンが手前に回転しテキストが変わるアニメーション 
+line-heightをheightの値を合わせることで上下中央揃え
+*/
+#entry .btn {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 80px;
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: 80px; 
+}
+
+/* 
+回転するボタンの設定
+2つのspanを3Dで表現
+*/
+#entry .btn span {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #ff2a2a;
+  transform-style: preserve-3d;
+  transition: all .5s;
+}
+
+#entry .btn span:nth-child(1) {
+  background: #ff2a2a;
+  color: #fff;
+  transform: rotateX(0deg);/*はじめは回転なし*/
+  transform-origin: 0 50% -40px;/* 回転する起点 */
+}
+
+#entry .btn:hover span:nth-child(1) {
+  transform: rotateX(-90deg);/* X軸に-90度回転 */
+}
+
+#entry .btn span:nth-child(2) {
+  background: #fff;
+  color: #ff2a2a;
+  transform: rotateX(90deg);/*はじめはX軸に90度回転*/
+  transform-origin: 0 50%  -40px;/* 回転する起点 */
+}
+
+#entry .btn:hover span:nth-child(2) {
+  transform: rotateX(0deg); /* X軸に0度回転 */
+}
+
+/*-------------------------------------------
+Footer
+-------------------------------------------*/
+#footer {
+  padding: 60px 0 20px 0;
+  background: #e8e8e8;
+}
+
+#footer a {
+  font-size: .875rem;
+  transition: all .3s;  
+}
+
+#footer a:hover {
+  opacity: .7;  
+}
+
+#footer .inner {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+#footer .inner > li {
+  width: 25%;
+}
+
+#footer .inner > li .title {
+  font-weight: bold;
+}
+
+#footer .inner > li .menu {
+  padding: 10px 0 0 10px;
+}
+
+#footer .inner > li .menu li {
+  margin-bottom: 3px;
+}
+
+#footer .copyright {
+  font-size: .625rem;
+  text-align: center;
+}
+
+
+/*-------------------------------------------
+SP
+-------------------------------------------*/
+@media screen and (max-width: 900px) {
+  
+  /*-------------------------------------------
+  Common
+  -------------------------------------------*/
+  .section_title {
+      font-size: 1.75rem;
+      margin-bottom: 60px;
+  }
+  
+  .section_title::after {
+      width: 80px;
+  }
+  
+  .wrapper {
+    padding: 0 16px;
+  }
+
+  /*-------------------------------------------
+  Header
+  -------------------------------------------*/
+
+  #header {
+    padding: 25px 0 0 25px;
+  }
+
+  /* ハンバーガーメニュー */
+
+  #header .hamburger_menu {
+    width: 75px;
+    height: 75px;
+  }
+
+  #header .hamburger_menu span {
+    left: 22px;
+    width: 35px;
+  }
+
+  #header .hamburger_menu span:nth-child(1) {
+    top: 27px;
+  }
+
+  #header .hamburger_menu span:nth-child(2) {
+    top: 37px;
+  }
+
+  #header .hamburger_menu span:nth-child(3) {
+    top: 47px;
+  }
+
+  #header .hamburger_menu.active span:nth-child(1), 
+  #header .hamburger_menu.active span:nth-child(2), 
+  #header .hamburger_menu.active span:nth-child(3) {
+    top: 37px;
+  }
+
+  .hamburger_menu_navi .site_title {
+    top: 25px;
+    left: 25px;
+  }
+
+  .hamburger_menu_navi .menu {
+    margin-top: 110px;
+  }
+
+  /*-------------------------------------------
+  Mainvisual
+  -------------------------------------------*/
+  #mainvisual {
+    height: 480px;
+    margin-bottom: 80px;
+  }
+  
+  #mainvisual .img_wrap li {
+    width: 100%;
+  }
+
+  #mainvisual .img_wrap li img {
+    height: 300px;
+    object-position: 0 30%;
+  }
+  
+  #mainvisual .text {
+    top: 305px;
+    left: 16px;
+    width: calc(100% - 32px);
+  }
+  
+  #mainvisual .text .title {
+    margin-bottom: 5px;
+    font-size: 1.75rem;
+  }
+  
+  #mainvisual .text .btn {
+    width: 100%;
+  }
+
+  /*-------------------------------------------
+  Reason
+  -------------------------------------------*/
+  #reason {
+    margin-bottom: 80px;
+  }
+
+  #reason .bg {
+    padding: 40px 0;
+  }
+
+  #reason .bg .slide {
+    width: calc(100% - 16px);
+  }
+
+  #reason .bg .slide .title {
+    font-size: 1.5rem;
+  }
+
+  @keyframes left_appear {
+    0% {
+      transform: translateX(-50%);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0%)
+    }
+  }
+
+  @keyframes right_appear {
+    0% {
+      transform: translateX(50%);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(16px);
+    }
+  }
+
+  /*-------------------------------------------
+  Voice
+  -------------------------------------------*/
+  #voice {
+    margin-bottom: 80px;
+  }
+
+  #voice .item {
+    align-items:  center;
+    margin-bottom: 40px;
+  }
+
+  #voice .item_left {
+    flex-direction: column-reverse;
+  }
+  
+  #voice .item_right {
+    flex-direction: column;
+  }
+
+  #voice .item_left .student {
+    margin-right: 0;
+  }
+
+  #voice .item_right .student {
+    margin-left: 0;
+  }
+
+  #voice .item .balloon {
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  /* 
+  吹き出しの矢印は下側左右中央に
+  */
+  #voice .item_left .balloon::before {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 15px solid #e9f1fb;
+    border-right: 15px solid transparent;
+  }
+
+  #voice .item_right .balloon::after {
+    top: 100%;
+    right: 50%;
+    border-top: 15px solid #e9f1fb;
+    transform: translateX(50%);
+    border-left: 15px solid transparent;
+  }
+
+  /*-------------------------------------------
+  Summary
+  -------------------------------------------*/
+  #summary {
+    margin-bottom: 80px;
+  }
+
+  #summary .menu {
+    flex-direction: column;
+  }
+
+  #summary .menu li {
+    width: 100%;
+    padding: 30px;
+  }
+
+  #summary .menu .menu_title {
+    margin-bottom: 30px;
+  }
+  
+  #summary .menu .menu_title .ja {
+    font-size: 1.5rem;
+  }
+  
+  #summary .menu .menu_title .en {
+    font-size: 1rem;
+  }
+
+  /*-------------------------------------------
+  Entry
+  -------------------------------------------*/
+  #entry {
+    margin-bottom: 80px;
+  }
+
+  #entry .title {
+    font-size: 1.5rem;
+  }
+
+  #entry .catchphrase {
+    font-size: 1rem;
+  }
+
+  /*-------------------------------------------
+  Footer
+  -------------------------------------------*/
+  #footer .inner {
+    flex-wrap: wrap;
+  }
+
+  #footer a {
+    font-size: .75rem;  
+  }
+
+  #footer a:hover {
+    opacity: .7;  
+  }
+
+  #footer .inner > li .title {
+    font-size: .925rem;
+  }
+
+  #footer .inner > li {
+    width: 50%;
+  }
+
+  #footer .inner > li:nth-child(1), 
+  #footer .inner > li:nth-child(2) {
+    margin-bottom: 30px;
+  }
+}
